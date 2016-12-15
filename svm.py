@@ -4,11 +4,13 @@ import time
 
 import nltk
 from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+from nltk.stem.snowball import SnowballStemmer
+#from nltk.stem import WordNetLemmatizer
 from sklearn.svm import LinearSVC
 
 english_stopwords = set(stopwords.words('english'))
-lemmatizer = WordNetLemmatizer()
+stemmer = SnowballStemmer("english")
+#lemmatizer = WordNetLemmatizer()
 
 class Classifier:
     def clean_text(self, text):
@@ -21,7 +23,7 @@ class Classifier:
     def get_features(self, text):
         text = self.clean_text(text)
         tokens = text.split()
-        tokens = [lemmatizer.lemmatize(token) \
+        tokens = [stemmer.stem(token) \
             for token in tokens \
             if '\'s' not in token \
             and '\'t' not in token]
